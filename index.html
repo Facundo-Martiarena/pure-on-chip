@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Organ-on-Chip CRO · Pitch Deck</title>
+
+  <!-- reveal.js core + base theme desde CDN (sin build, ideal para GitHub Pages) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reveal.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ============================================================
+       🧬 TEMA PROPIO — Biotech / microfluídica
+       ============================================================ */
+    :root {
+      --bg:        #060b14;
+      --bg-2:      #0a1322;
+      --ink:       #e8f0fb;
+      --ink-soft:  #9fb3cc;
+      --muted:     #64788f;
+      --teal:      #2ee6c8;
+      --cyan:      #38bdf8;
+      --violet:    #8b7bf7;
+      --amber:     #fbbf24;
+      --line:      rgba(120, 160, 200, 0.14);
+      --card:      rgba(255, 255, 255, 0.035);
+      --card-br:   rgba(140, 180, 220, 0.12);
+    }
+
+    /* ---------- Base ---------- */
+    .reveal {
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 30px;
+      color: var(--ink);
+      font-weight: 400;
+    }
+    .reveal .slides { text-align: left; }
+    .reveal .slides section { height: 100%; }
+
+    html { background: var(--bg); }
+    .reveal-viewport {
+      background:
+        radial-gradient(1200px 700px at 12% -10%, rgba(46,230,200,0.10), transparent 60%),
+        radial-gradient(1000px 800px at 108% 110%, rgba(139,123,247,0.12), transparent 55%),
+        linear-gradient(160deg, var(--bg) 0%, var(--bg-2) 100%);
+    }
+
+    /* ---------- Tipografía ---------- */
+    .reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+      font-family: 'Space Grotesk', 'Inter', sans-serif;
+      color: var(--ink);
+      text-transform: none;
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      margin: 0 0 0.4em 0;
+      font-weight: 700;
+    }
+    .reveal h1 { font-size: 2.6em; font-weight: 800; }
+    .reveal h2 { font-size: 1.7em; }
+    .reveal h3 { font-size: 1.15em; }
+    .reveal p  { line-height: 1.5; color: var(--ink-soft); }
+    .reveal strong { color: var(--ink); font-weight: 700; }
+    .reveal em { color: var(--teal); font-style: normal; font-weight: 500; }
+
+    .reveal a { color: var(--cyan); }
+
+    /* gradientes de acento en texto */
+    .grad {
+      background: linear-gradient(100deg, var(--teal), var(--cyan) 55%, var(--violet));
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* ---------- Componentes ---------- */
+    .eyebrow {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.5em;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--teal);
+      font-weight: 600;
+      margin-bottom: 0.6em;
+      display: block;
+    }
+
+    .kicker-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.5em;
+      color: var(--muted);
+      letter-spacing: 0.2em;
+    }
+
+    .lead { font-size: 1.05em; color: var(--ink-soft); max-width: 24em; }
+
+    .reveal ul { margin-left: 0; list-style: none; }
+    .reveal ul li {
+      position: relative;
+      padding-left: 1.4em;
+      margin: 0.55em 0;
+      color: var(--ink-soft);
+      line-height: 1.45;
+    }
+    .reveal ul li::before {
+      content: "";
+      position: absolute; left: 0; top: 0.55em;
+      width: 0.5em; height: 0.5em; border-radius: 2px;
+      background: linear-gradient(135deg, var(--teal), var(--cyan));
+      box-shadow: 0 0 10px rgba(46,230,200,0.5);
+    }
+
+    .grid { display: grid; gap: 22px; }
+    .g-2 { grid-template-columns: repeat(2, 1fr); }
+    .g-3 { grid-template-columns: repeat(3, 1fr); }
+    .g-4 { grid-template-columns: repeat(4, 1fr); }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--card-br);
+      border-radius: 16px;
+      padding: 22px 24px;
+      backdrop-filter: blur(6px);
+    }
+    .card h3 { color: var(--ink); margin-bottom: 0.35em; font-size: 1em; }
+    .card p  { font-size: 0.72em; margin: 0; line-height: 1.45; }
+    .card .ic { font-size: 1.5em; margin-bottom: 0.3em; display: block; }
+
+    .stat { }
+    .stat .big {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.4em; font-weight: 700; line-height: 1;
+      background: linear-gradient(120deg, var(--teal), var(--cyan));
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .stat .lbl { font-size: 0.68em; color: var(--muted); margin-top: 0.4em; display: block; }
+
+    .tag {
+      display: inline-block;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.6em; font-weight: 500;
+      padding: 0.35em 0.9em; border-radius: 999px;
+      border: 1px solid var(--card-br);
+      color: var(--ink-soft);
+      margin: 0.2em 0.3em 0.2em 0;
+      background: rgba(255,255,255,0.03);
+    }
+    .tag.on { color: var(--teal); border-color: rgba(46,230,200,0.4); background: rgba(46,230,200,0.08); }
+
+    /* tabla benchmarking */
+    .reveal table { font-size: 0.62em; border-collapse: collapse; width: 100%; }
+    .reveal table th, .reveal table td {
+      border: none; border-bottom: 1px solid var(--line);
+      padding: 0.7em 0.8em; text-align: left; vertical-align: top;
+    }
+    .reveal table th {
+      font-family: 'Space Grotesk', sans-serif;
+      color: var(--teal); text-transform: uppercase;
+      letter-spacing: 0.08em; font-size: 0.85em; font-weight: 600;
+    }
+    .reveal table td { color: var(--ink-soft); }
+    .reveal table tr.us td {
+      background: linear-gradient(90deg, rgba(46,230,200,0.08), rgba(56,189,248,0.04));
+      color: var(--ink);
+    }
+    .reveal table td b { color: var(--ink); }
+
+    /* timeline / roadmap */
+    .road { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
+    .road .yr {
+      border-top: 2px solid var(--line);
+      padding-top: 16px; position: relative;
+    }
+    .road .yr::before {
+      content: ""; position: absolute; top: -7px; left: 0;
+      width: 12px; height: 12px; border-radius: 50%;
+      background: var(--bg); border: 2px solid var(--teal);
+    }
+    .road .yr.active::before { background: var(--teal); box-shadow: 0 0 14px var(--teal); }
+    .road .yr .y { font-family:'Space Grotesk'; color: var(--cyan); font-weight:600; font-size:0.78em; }
+    .road .yr .t { color: var(--ink); font-weight:600; font-size:0.72em; margin:0.3em 0; display:block; }
+    .road .yr .d { color: var(--muted); font-size:0.6em; line-height:1.4; }
+    .road .yr .rev { color: var(--teal); font-size:0.64em; font-weight:600; margin-top:0.5em; display:block; font-family:'Space Grotesk'; }
+
+    /* barra de presupuesto */
+    .budget-row { display:flex; align-items:center; gap:16px; margin:0.5em 0; }
+    .budget-row .name { flex: 0 0 38%; font-size:0.72em; color:var(--ink); }
+    .budget-row .bar { flex:1; height:12px; border-radius:999px; background:rgba(255,255,255,0.05); overflow:hidden; }
+    .budget-row .bar span { display:block; height:100%; border-radius:999px; background:linear-gradient(90deg,var(--teal),var(--cyan)); }
+    .budget-row .amt { flex:0 0 28%; text-align:right; font-family:'Space Grotesk'; font-size:0.72em; color:var(--ink-soft); }
+
+    .two-col { display:grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+    .footnote { position: absolute; bottom: 18px; left: 60px; font-size: 0.5em; color: var(--muted); letter-spacing: 0.05em; }
+
+    /* cover */
+    .cover-logo {
+      font-family:'Space Grotesk'; font-weight:700; font-size:0.62em;
+      letter-spacing:0.18em; color:var(--ink-soft);
+      display:flex; align-items:center; gap:0.5em; margin-bottom: 2.2em;
+    }
+    .dna-dot { width:14px; height:14px; border-radius:50%;
+      background: radial-gradient(circle at 30% 30%, var(--teal), var(--violet));
+      box-shadow:0 0 18px rgba(46,230,200,0.6); }
+    .tagline { font-size: 1.0em; color: var(--teal); font-weight:500; font-family:'Space Grotesk'; margin-top: 0.8em; }
+
+    /* progress + controls accent */
+    .reveal .progress { color: var(--teal); height: 4px; }
+    .reveal .controls { color: var(--teal); }
+    .reveal .slide-number { background: transparent; color: var(--muted); font-family:'Space Grotesk'; }
+
+    /* helper */
+    .mt { margin-top: 0.8em; }
+    .center { text-align:center; }
+    .big-q {
+      font-family:'Space Grotesk'; font-weight:700; font-size:1.3em;
+      color: var(--ink); line-height:1.25;
+    }
+  </style>
+</head>
+
+<body>
+<div class="reveal">
+  <div class="slides">
+
+    <!-- ===================== 0 · PORTADA ===================== -->
+    <section data-background-gradient="linear-gradient(160deg, #060b14 0%, #0a1322 60%, #0d1b2e 100%)">
+      <div class="cover-logo"><span class="dna-dot"></span> ORGAN-ON-CHIP · CRO</div>
+      <h1 style="font-size:3.1em;">🧬 <span class="grad">[NOMBRE&nbsp;EMPRESA]</span></h1>
+      <p class="tagline">"Human biology on a chip, without the animal."</p>
+      <p class="lead mt" style="margin-top:1.4em;">
+        Evaluación de seguridad cosmética con modelos humanos avanzados — microfluídica,
+        biología humana e IA. <strong>Más seguros. Más éticos. Más rápidos.</strong>
+      </p>
+      <p style="margin-top:2.4em; font-size:0.6em; color:var(--muted); letter-spacing:0.15em;">
+        PITCH DECK · RONDA SEMILLA 2026 &nbsp;·&nbsp; ← → para navegar &nbsp;·&nbsp; pulsá <b>S</b> para notas
+      </p>
+    </section>
+
+    <!-- ===================== 1 · QUIÉNES SOMOS ===================== -->
+    <section>
+      <section>
+        <span class="eyebrow">01 · Quiénes somos</span>
+        <h2>Una <span class="grad">CRO especializada</span> en cosmética</h2>
+        <p class="lead mt">
+          Ayudamos a las empresas cosméticas a evaluar la seguridad y el comportamiento de
+          ingredientes y productos mediante tecnología <strong>Organ-on-Chip</strong>, sin depender
+          de la experimentación animal.
+        </p>
+        <div class="grid g-3 mt" style="margin-top:1.6em;">
+          <div class="card"><span class="ic">🔬</span><h3>Biología humana</h3><p>Modelos basados en tejido humano real, no cultivos planos ni modelos animales.</p></div>
+          <div class="card"><span class="ic">💧</span><h3>Microfluídica</h3><p>Flujo dinámico que recrea la fisiología viva: vascularización e interfaz aire-líquido.</p></div>
+          <div class="card"><span class="ic">🤖</span><h3>IA predictiva</h3><p>Datos de los chips que alimentan modelos de predicción toxicológica.</p></div>
+        </div>
+        <p style="font-size:0.6em; color:var(--muted); margin-top:1.4em;">↓ Visión · Misión · Valores</p>
+      </section>
+
+      <!-- Visión -->
+      <section>
+        <span class="eyebrow">Visión</span>
+        <h2 style="max-width:16em;">Transformar la <span class="grad">evaluación de seguridad</span> en la industria cosmética</h2>
+        <p class="lead mt" style="max-width:26em;">
+          Con modelos humanos avanzados que permitan desarrollar productos más <strong>seguros, éticos
+          y sostenibles</strong>, reduciendo progresivamente la dependencia de la experimentación animal.
+        </p>
+      </section>
+
+      <!-- Misión -->
+      <section>
+        <span class="eyebrow">Misión</span>
+        <h2 style="max-width:18em;">Resultados <span class="grad">predictivos, fiables y relevantes</span> para decidir</h2>
+        <p class="lead mt" style="max-width:27em;">
+          Combinamos modelos biológicos humanos, microfluídica y análisis avanzado de datos para
+          evaluar la seguridad y el comportamiento de ingredientes y productos cosméticos.
+        </p>
+      </section>
+
+      <!-- Valores -->
+      <section>
+        <span class="eyebrow">Valores</span>
+        <h2>Lo que nos <span class="grad">guía</span></h2>
+        <div class="grid g-4 mt">
+          <div class="card"><span class="ic">🧪</span><h3>Innovación científica</h3><p>Biotecnología, microfluídica, ingeniería e IA.</p></div>
+          <div class="card"><span class="ic">🐇</span><h3>Ética & bienestar animal</h3><p>Reducir y reemplazar el uso de animales.</p></div>
+          <div class="card"><span class="ic">📊</span><h3>Rigor científico</h3><p>Reproducibilidad, trazabilidad y calidad del dato.</p></div>
+          <div class="card"><span class="ic">🧍</span><h3>Enfoque humano</h3><p>Biología humana = resultados representativos.</p></div>
+          <div class="card"><span class="ic">🌱</span><h3>Sostenibilidad</h3><p>Menos recursos, residuos e impacto ambiental.</p></div>
+          <div class="card"><span class="ic">🤝</span><h3>Colaboración</h3><p>Con empresas, centros, reguladores y ecosistema.</p></div>
+          <div class="card"><span class="ic">🔍</span><h3>Transparencia</h3><p>Capacidades, límites y resultados, claros.</p></div>
+          <div class="card"><span class="ic">🎯</span><h3>Orientación al impacto</h3><p>Cada ensayo acelera productos más seguros.</p></div>
+        </div>
+      </section>
+    </section>
+
+    <!-- ===================== 2 · PROBLEMA ===================== -->
+    <section>
+      <span class="eyebrow">02 · El problema</span>
+      <h2>Regulación estricta, <span class="grad">sin alternativas óptimas</span></h2>
+      <div class="two-col mt">
+        <div>
+          <ul>
+            <li><strong>Doble vara regulatoria:</strong> la UE prohíbe el testeo animal en cosméticos (Reg. CE 1223/2009), pero REACH/ECHA sigue exigiendo demostración toxicológica exhaustiva.</li>
+            <li><strong>Los métodos actuales fallan:</strong> los cultivos 2D no reproducen el tejido vivo; la piel reconstituida estática (EpiDerm) no tiene flujo sanguíneo, respuesta inmune ni barrera vascular.</li>
+          </ul>
+        </div>
+        <div>
+          <ul>
+            <li><strong>Aerosoles y toxicidad sistémica:</strong> sprays y polvos requieren pruebas de inhalación y penetración hepática — imposibles con un parche de piel estático.</li>
+            <li><strong>Coste y tiempo:</strong> falsos positivos/negativos obligan a reformular tarde, retrasando meses el <em>time-to-market</em>.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card mt" style="margin-top:1.2em; border-color:rgba(251,191,36,0.3);">
+        <p style="color:var(--ink); font-size:0.78em;">⚠️ <strong>El gap:</strong> la industria necesita demostrar seguridad humana <em>sin animales</em> y <em>sin</em> modelos que no predicen la realidad fisiológica. Ese vacío es nuestra oportunidad.</p>
+      </div>
+    </section>
+
+    <!-- ===================== 3 · SOLUCIÓN ===================== -->
+    <section>
+      <span class="eyebrow">03 · La solución</span>
+      <h2>Plataforma <span class="grad">Testing-as-a-Service</span> Organ-on-Chip dinámico</h2>
+      <div class="grid g-2 mt">
+        <div class="card">
+          <h3>🩸 Skin-on-Chip vascularizado e inmunocompetente</h3>
+          <p>Epidermis, dermis y endotelio vascular bajo flujo continuo. Evalúa penetración dérmica, irritación, sensibilización y respuesta inflamatoria con células inmunes vivas.</p>
+        </div>
+        <div class="card">
+          <h3>🫁 Lung-on-Chip</h3>
+          <p>Epitelio alveolar/bronquial con interfaz aire-líquido para testear toxicidad por inhalación de perfumes, desodorantes y aerosoles.</p>
+        </div>
+        <div class="card">
+          <h3>🔗 Multi-Organ Chip (Piel + Hígado)</h3>
+          <p>Detecta si un ingrediente que atraviesa la barrera cutánea genera metabolitos tóxicos en el hígado.</p>
+        </div>
+        <div class="card">
+          <h3>🤖 Algoritmos predictivos (IA)</h3>
+          <p>Los datos de los chips alimentan modelos que predicen perfiles de toxicidad <em>antes</em> del ensayo biológico.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 4 · MERCADO ===================== -->
+    <section>
+      <span class="eyebrow">04 · El mercado</span>
+      <h2>Viento de cola <span class="grad">regulatorio y de mercado</span></h2>
+      <div class="grid g-3 mt" style="margin-top:1.4em;">
+        <div class="card stat center">
+          <div class="big">+30%</div>
+          <span class="lbl">CAGR del mercado Organ-on-Chip (>$150M hoy → >$1.000M antes de 2030)</span>
+        </div>
+        <div class="card stat center">
+          <div class="big">$5.000M</div>
+          <span class="lbl">Mercado de ensayos toxicológicos alternativos in vitro</span>
+        </div>
+        <div class="card stat center">
+          <div class="big">NAMs</div>
+          <span class="lbl">FDA Modernization Act + OCDE validando Nuevas Metodologías de Enfoque</span>
+        </div>
+      </div>
+      <ul class="mt" style="margin-top:1.4em;">
+        <li>Auge global de la cosmética <strong>Clean Beauty y vegana</strong>, que exige sello científico sin animales.</li>
+        <li>La directiva europea empuja la demanda de alternativas <em>in vitro</em> validadas.</li>
+      </ul>
+    </section>
+
+    <!-- ===================== 5 · MODELO DE NEGOCIO ===================== -->
+    <section>
+      <span class="eyebrow">05 · Modelo de negocio</span>
+      <h2>B2B híbrido, <span class="grad">servicio de alto valor</span></h2>
+      <div class="grid g-3 mt">
+        <div class="card">
+          <span class="tag on">Principal</span>
+          <h3 class="mt">Testing-as-a-Service</h3>
+          <p>El cliente envía su molécula/formulación; ejecutamos el panel y entregamos un informe de seguridad y eficacia validado.</p>
+          <p class="mt" style="color:var(--teal); font-weight:600;">10.000 € – 40.000 € / proyecto</p>
+        </div>
+        <div class="card">
+          <span class="tag">Recurrente</span>
+          <h3 class="mt">Suscripción Plataforma + IA</h3>
+          <p>Acceso a nuestra base de datos de perfiles toxicológicos comparativos para predecir formulaciones <em>in silico</em>.</p>
+        </div>
+        <div class="card">
+          <span class="tag">Escalado</span>
+          <h3 class="mt">Kits consumibles</h3>
+          <p>Chips patentados + cartuchos de fluidos para grandes corporaciones que operen los ensayos in-house.</p>
+        </div>
+      </div>
+      <p class="mt" style="margin-top:1.4em; font-size:0.72em; color:var(--muted);">Del servicio llave en mano → al dato recurrente → al producto escalable.</p>
+    </section>
+
+    <!-- ===================== 6 · CLIENTES ===================== -->
+    <section>
+      <span class="eyebrow">06 · Clientes</span>
+      <h2>A quién <span class="grad">servimos</span></h2>
+      <div class="grid g-2 mt">
+        <div class="card"><h3>🧴 Productores de materias primas e ingredientes</h3><p>Ingredientes botánicos, fermentados y química verde que necesitan certificar seguridad para vender a marcas finales.</p></div>
+        <div class="card"><h3>🏢 Grandes marcas de cosmética</h3><p>L'Oréal, Unilever, Beiersdorf, Estée Lauder, Puig y otros grupos de cuidado personal.</p></div>
+        <div class="card"><h3>🌿 Marcas emergentes vegana/natural</h3><p>Alto presupuesto de marketing ético que buscan un sello científico indiscutible sin experimentación animal.</p></div>
+        <div class="card"><h3>💊 CROs farmacéuticas tradicionales</h3><p>Subcontratan servicios avanzados de microfluídica que no tienen desarrollados in-house.</p></div>
+      </div>
+    </section>
+
+    <!-- ===================== 7 · BENCHMARKING ===================== -->
+    <section>
+      <span class="eyebrow">07 · Benchmarking</span>
+      <h2>La <span class="grad">competencia</span> — y nuestro diferencial</h2>
+      <table class="mt">
+        <thead>
+          <tr><th>Empresa</th><th>Fortalezas</th><th>Debilidad frente a nosotros</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><b>Emulate Inc.</b> 🇺🇸</td><td>Pionero, hardware validado, gran financiación.</td><td>90% enfoque farmacéutico; hardware caro y cerrado; no verticalizado en cosmética.</td></tr>
+          <tr><td><b>Mimetas</b> 🇳🇱</td><td>Alto rendimiento (OrganoPlate), fácil integración.</td><td>Modelos simplificados, sin deformación mecánica ni interfaz aire-líquido para aerosoles.</td></tr>
+          <tr><td><b>Beonchip</b> 🇪🇸</td><td>Fabricación excelente de microfluídica, accesible.</td><td>Venden hardware/dispositivos vacíos, no el servicio integral de biología + informe regulatorio.</td></tr>
+          <tr><td><b>TissUse</b> 🇩🇪</td><td>Líderes en multiórgano (2–4 órganos).</td><td>Muy complejos y costosos; tiempos de entrega lentos para la dinámica rápida de la cosmética.</td></tr>
+          <tr class="us"><td><b>🧬 NOSOTROS</b></td><td colspan="2"><b>Especialistas exclusivos en cosmética</b> + modelo CRO llave en mano + integración piel/pulmón con lectura analítica e IA.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ===================== 8 · EQUIPO ===================== -->
+    <section>
+      <span class="eyebrow">08 · Equipo</span>
+      <h2>Composición <span class="grad">ideal</span> de la startup</h2>
+      <div class="grid g-2 mt">
+        <div class="card"><h3>CEO · Gestión & Estrategia</h3><p>Perfil de negocio, captación de fondos y desarrollo comercial B2B.</p></div>
+        <div class="card"><h3>CSO · Biología celular</h3><p>Doctor/a en biotecnología o toxicología dérmica; experto/a en diferenciación celular (iPSCs) e inmunología.</p></div>
+        <div class="card"><h3>CTO · Microfluídica & Ingeniería</h3><p>Ingeniero/a biomédico con experiencia en microfabricación, polímeros y dinámica de fluidos.</p></div>
+        <div class="card"><h3>Lead AI / Bioinformático</h3><p>Análisis de imagen automatizado, biosensórica y modelos predictivos de datos.</p></div>
+      </div>
+      <div class="card mt" style="margin-top:1.1em;">
+        <h3>🧭 Consejo Asesor</h3>
+        <p>Experto/a en regulación cosmética europea (Cosmetics Europe / REACH) + mentor/a de la industria cosmética/dermo.</p>
+      </div>
+    </section>
+
+    <!-- ===================== 9 · ROADMAP 5 AÑOS ===================== -->
+    <section>
+      <span class="eyebrow">09 · Proyecto a 5 años</span>
+      <h2>Del <span class="grad">prototipo</span> al referente europeo</h2>
+      <div class="road mt" style="margin-top:1.6em;">
+        <div class="yr active">
+          <span class="y">Año 1</span><span class="t">Fundación & MVP</span>
+          <span class="d">Skin-on-Chip vascularizado validado en incubadora (BIC Bizkaia / CIC bioGUNE). 2 pilotos locales.</span>
+        </div>
+        <div class="yr">
+          <span class="y">Año 2</span><span class="t">Go-to-Market TaaS</span>
+          <span class="d">Lanzamiento ensayo dérmico (irritación, absorción).</span>
+          <span class="rev">300.000 €</span>
+        </div>
+        <div class="yr">
+          <span class="y">Año 3</span><span class="t">Ampliación catálogo</span>
+          <span class="d">Lung-on-Chip + plataforma IA. Expansión a Francia y Alemania.</span>
+          <span class="rev">1,2 M€</span>
+        </div>
+        <div class="yr">
+          <span class="y">Año 4</span><span class="t">Multiórgano & OCDE</span>
+          <span class="d">Chip Skin-Liver. Inicio acreditación métodos alternativos OCDE.</span>
+          <span class="rev">3,5 M€</span>
+        </div>
+        <div class="yr">
+          <span class="y">Año 5</span><span class="t">Escala global</span>
+          <span class="d">EBITDA positivo. Apertura EE.UU. y Asia. Referente europeo.</span>
+          <span class="rev">>7 M€</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 10 · FINANCIACIÓN ===================== -->
+    <section>
+      <section>
+        <span class="eyebrow">10 · ¿Cuánto dinero necesito?</span>
+        <h2>Ronda Semilla · <span class="grad">1.200.000 €</span></h2>
+        <p class="lead mt">Horizonte de <strong>18–24 meses</strong>. Estrategia mixta capital + financiación pública no dilutiva.</p>
+        <div class="grid g-2 mt" style="margin-top:1.4em;">
+          <div class="card stat center">
+            <div class="big">~700 K€</div>
+            <span class="lbl">Capital privado · Business Angels</span>
+          </div>
+          <div class="card stat center">
+            <div class="big">~500 K€</div>
+            <span class="lbl">Pública no dilutiva · CDTI NEOTEC, ENISA, Ekintzaile / Hazitek</span>
+          </div>
+        </div>
+        <p style="font-size:0.6em; color:var(--muted); margin-top:1.4em;">↓ ¿Para qué lo necesito?</p>
+      </section>
+
+      <section>
+        <span class="eyebrow">10 · ¿Para qué lo necesito?</span>
+        <h2>Desglose del <span class="grad">presupuesto</span></h2>
+        <div class="mt" style="margin-top:1.4em;">
+          <div class="budget-row"><span class="name">👩‍🔬 Personal clave <b>35%</b></span><span class="bar"><span style="width:100%"></span></span><span class="amt">420.000 €</span></div>
+          <div class="budget-row"><span class="name">🧫 I+D y validación biológica <b>30%</b></span><span class="bar"><span style="width:86%"></span></span><span class="amt">360.000 €</span></div>
+          <div class="budget-row"><span class="name">🔬 Equipamiento e instalaciones <b>15%</b></span><span class="bar"><span style="width:43%"></span></span><span class="amt">180.000 €</span></div>
+          <div class="budget-row"><span class="name">⚖️ Propiedad intelectual & regulación <b>12%</b></span><span class="bar"><span style="width:34%"></span></span><span class="amt">144.000 €</span></div>
+          <div class="budget-row"><span class="name">📣 Desarrollo de negocio & marketing <b>8%</b></span><span class="bar"><span style="width:23%"></span></span><span class="amt">96.000 €</span></div>
+        </div>
+        <p style="font-size:0.58em; color:var(--muted); margin-top:1.4em;">
+          Salarios equipo científico 2 años · medios de cultivo, iPSCs, anticuerpos, chips · salas blancas BSL-2 y microscopía · patentes del chip y asesoría · ferias In-Cosmetics / Cosmoprof y branding.
+        </p>
+      </section>
+    </section>
+
+    <!-- ===================== CIERRE ===================== -->
+    <section data-background-gradient="linear-gradient(160deg, #0a1322 0%, #0d1b2e 100%)">
+      <div class="center" style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%;">
+        <div class="cover-logo" style="justify-content:center;"><span class="dna-dot"></span> ORGAN-ON-CHIP · CRO</div>
+        <h1 class="grad" style="font-size:2.4em;">[NOMBRE EMPRESA]</h1>
+        <p class="big-q mt" style="max-width:16em; margin-top:0.6em;">Human biology on a chip,<br>without the animal.</p>
+        <p class="lead center mt" style="margin-top:1.4em; max-width:24em;">
+          Buscamos <strong>1,2 M€</strong> para construir el referente europeo en ensayos cosméticos avanzados. Hablemos.
+        </p>
+        <p style="margin-top:2em; font-size:0.62em; color:var(--muted);">✉️ contacto@[empresa].com &nbsp;·&nbsp; 🌐 www.[empresa].com</p>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<!-- reveal.js runtime desde CDN -->
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/plugin/notes/notes.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/plugin/highlight/highlight.js"></script>
+<script>
+  Reveal.initialize({
+    hash: true,
+    slideNumber: 'c/t',
+    transition: 'slide',
+    transitionSpeed: 'default',
+    backgroundTransition: 'fade',
+    width: 1280,
+    height: 720,
+    margin: 0.08,
+    controls: true,
+    progress: true,
+    center: false,
+    plugins: [ RevealNotes, RevealHighlight ]
+  });
+</script>
+</body>
+</html>
