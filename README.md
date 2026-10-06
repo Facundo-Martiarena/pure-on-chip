@@ -1,91 +1,41 @@
-# 🧬 [NOMBRE EMPRESA] — Pitch Deck
+# 🐇 Pure-on-Chip — Pitch Deck
 
-Presentación (pitch deck) de la CRO de **Organ-on-Chip para cosmética**, construida como
-sitio estático con [reveal.js](https://revealjs.com/). Sin build, sin dependencias locales:
-un único `index.html` que GitHub Pages sirve directo.
+> *"Beyond the cell"* — La CRO de **Organ-on-Chip** especializada en cosmética ética.
+> Seguridad humana demostrada, cero daño animal.
 
----
-
-## ✏️ Antes de nada: poné el nombre real
-
-El nombre está marcado como placeholder. Buscá y reemplazá **`[NOMBRE EMPRESA]`** en `index.html`
-(aparece en la portada y en el cierre). Mismo criterio con `contacto@[empresa].com` y `www.[empresa].com`.
-
-> Tip: en tu editor, "Reemplazar todo" sobre `[NOMBRE EMPRESA]`.
+Presentación (pitch deck) construida como sitio estático con [reveal.js](https://revealjs.com/).
+Sin build, sin dependencias locales: un único `index.html` que GitHub Pages sirve directo.
 
 ---
 
 ## 👀 Ver en local
 
-No necesitás servidor, pero reveal.js usa el hash de la URL, así que lo ideal es un server estático:
-
 ```bash
-# opción 1 — abrir directo
-open index.html
-
-# opción 2 — server local (recomendado)
+# server local (recomendado — reveal.js usa el hash de la URL)
 python3 -m http.server 8000
 # → http://localhost:8000
 ```
 
-**Navegación:** `←` / `→` o `Espacio` para avanzar · `Esc` para vista general ·
+**Navegación:** `←` / `→` o `Espacio` avanzar · `↓` sub-slides · `Esc` vista general ·
 `S` modo presentador (notas) · `F` pantalla completa.
-
----
-
-## 🚀 Deploy en GitHub Pages
-
-### 1. Subí el repo a GitHub
-
-```bash
-git init
-git add .
-git commit -m "feat: pitch deck organ-on-chip CRO"
-git branch -M main
-git remote add origin https://github.com/TU_USUARIO/TU_REPO.git
-git push -u origin main
-```
-
-### 2. Activá Pages
-
-En el repo de GitHub → **Settings** → **Pages**:
-
-- **Source:** `Deploy from a branch`
-- **Branch:** `main` · carpeta `/ (root)`
-- Guardá.
-
-En ~1 minuto queda publicado en:
-
-```
-https://TU_USUARIO.github.io/TU_REPO/
-```
-
-> El archivo `.nojekyll` ya está incluido para que Pages sirva el estático sin procesarlo con Jekyll.
 
 ---
 
 ## 📄 Exportar a PDF
 
-reveal.js exporta a PDF nativo desde Chrome:
-
-1. Abrí la presentación con `?print-pdf` al final de la URL:
-   `http://localhost:8000/?print-pdf`
-2. `Cmd/Ctrl + P` → Destino **Guardar como PDF** → Márgenes **Ninguno** → Fondos **activados**.
+1. Abrí con `?print-pdf`: `http://localhost:8000/?print-pdf`
+2. `Cmd/Ctrl + P` → **Guardar como PDF** → Márgenes **Ninguno** → Fondos **activados**.
 
 ---
 
-## 🎨 Personalización rápida
+## 🎨 Personalización
 
-Todo el tema vive en el bloque `<style>` de `index.html`, en las variables `:root`:
+El tema vive en el bloque `<style>` de `index.html`, en las variables `:root`
+(paleta tomada del logo: teal `--teal`, verde `--green`, azul `--blue`).
+Cada `<section>` es un slide; los `<section>` anidados crean sub-slides verticales.
 
-| Variable | Qué controla |
-|----------|--------------|
-| `--teal` / `--cyan` / `--violet` | Colores de acento y gradientes |
-| `--bg` / `--bg-2` | Fondo de la presentación |
-| `--ink` / `--ink-soft` | Texto principal / secundario |
-
-Las slides son HTML plano dentro de `<section>`. Cada `<section>` es un slide;
-los `<section>` anidados crean sub-slides verticales (navegás con `↓`).
+Imágenes de marca: `logo.png` (portada, cierre y marca de agua) y `certificado.png`
+(sello "Tested on Synthetic Human Biology" en la sección de modelo de negocio).
 
 ---
 
@@ -94,11 +44,19 @@ los `<section>` anidados crean sub-slides verticales (navegás con `↓`).
 1. Portada
 2. Quiénes somos → Visión · Misión · Valores
 3. El problema
-4. La solución
+4. La solución (Skin / Lung / Multi-órgano / IA)
 5. El mercado
-6. Modelo de negocio
+6. **Modelo de negocio** → Tesis B2B2C · Propuesta de valor dual · El sello · Portafolio ·
+   Unit economics · Go-to-Market · Moats · Business Model Canvas
 7. Clientes
-8. Benchmarking (competencia)
+8. Benchmarking (líderes + nuestra ventaja)
 9. Equipo
 10. Proyecto a 5 años (roadmap)
 11. Financiación (cuánto / para qué) → cierre
+
+---
+
+## 🚀 Deploy
+
+Publicado con GitHub Pages desde la rama `main` (carpeta raíz).
+El archivo `.nojekyll` hace que Pages sirva el estático sin procesarlo con Jekyll.
